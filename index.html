@@ -1,42 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link href="webjars/bootstrap/4.4.1/css/bootstrap.min.css"
+        rel="stylesheet">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Monoton|Oleo+Script+Swash+Caps&display=swap" rel="stylesheet">
     <title>Diceroller</title>
+    <style>
+        body {
+            background-color:antiquewhite;
+        }
+
+        h1 {
+            font-family: "Monoton", cursive;
+            text-align: left;
+            margin-right: 5%;
+        }
+        h2 {
+            font-family:"Oleo Script Swash Caps", cursive;
+            font-size: large;
+            text-align: left;
+            margin-right: 5%;
+        }
+        
+        #expl {
+            text-align: left;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
+
+        #diceBox {
+            background-color:rgb(231, 204, 169);
+            margin: 20px auto;
+            position: relative;
+            width: 60%;
+            border-radius: 3px;
+            
+        }
+
+        #buttons {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            margin-left: 5%;
+        }
+
+        #buttons button {
+            width: 50px;
+            height: 50px;
+        }
+
+        #results {
+            margin-left: 5%;
+        }
+
+        .form-group{
+            margin-left: 3%;
+        }
+    </style>
 </head>
 <body>
+<div id="diceBox" class="container">
 
-<div class="container-fluid">
+    <h1>Diceroller</h1>
+    <h2>(for the high rollas)</h2>
+    <p id="expl">Use this for your D&D or board gaming needs. 
+        Enter amount of die and any modifications as needed (like "3" if +3) and then click the die type you'd like to roll.</p>
+    <div class="row">
+        <div class="col-xs-6" id="buttons">
+            <button id="d4" class="btn btn-outline-light">d4</button>
+            <button id="d6" class="btn btn-outline-light">d6</button>
+            <button id="d8" class="btn btn-outline-light">d8</button>
+            <button id="d10" class="btn btn-outline-light">d10</button>
+            <button id="d12" class="btn btn-outline-light">d12</button>
+            <button id="d20" class="btn btn-outline-light">d20</button>
 
-    <h1 style="border-style: solid;">My First Bootstrap Page</h1>
-    <p style="border-style: solid;">This is some text.</p>
-
-        
-    <div id="buttons">
-        <div class="row">
-            <div class="col-xs-1">
-                <button id="d3" class="btn btn-block btn-primary">d3</button>
-            </div>
-            <div class="col-xs-1">
-                <button id="d6" class="btn btn-block btn-primary">d6</button>
-            </div>
-            <div class="col-xs-1">
-                <button id="d8" class="btn btn-block btn-primary">d8</button>
-            </div>
-            <div class="col-xs-1">
-                <button id="d12" class="btn btn-block btn-primary">d12</button>
-            </div>
-            <div class="col-xs-1">
-                <button id="d20" class="btn btn-block btn-primary">d20</button>
-            </div>
+        </div>
+        <div >
+            <p id="results">This is where your results will appear!</p>
         </div>
     </div>
-</div>
+    <div class="row">
+        <form  id="amountForm" class="form-inline col-sm">
+            <div class="form-group col-sm">
+                <input type="text" id="amountInput" class="form-control" placeholder="How many die?">
+                <input type="submit">
+            </div>
+        </form>
+        <form  id="modForm" class="form-inline col-sm">
+            <div class="form-group col-sm">
+                <input type="text" id="modInput" class="form-control" placeholder="Any modifiers?">
+                <input type="submit">
+            </div>
+        </form>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </div>
+
+</div>
+<script src="webjars/jquery/3.4.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="js/script.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+
+var dieAmount = 0;
+var dieMod = 0;
+var result = 0;
+var results = [];
+var dieType = 0;
+
+$(document).ready(function() { 
+
+    $("#amountForm").submit(function(event) {
+        dieAmount = $("#amountInput").val();
+        console.log(dieAmount);
+        event.preventDefault();
+    });
+
+    $("#modForm").submit(function(event) {
+        dieMod = $("#modInput").val();
+        event.preventDefault();
+    });
+    
+
+    $("#d4").click(function(){
+        calc(4);
+    });
+    $("#d6").click(function(){
+        calc(6);
+    });
+    $("#d8").click(function(){
+        calc(8);
+    });
+    $("#d10").click(function(){
+        calc(10);
+    });
+    $("#d12").click(function(){
+        calc(12);
+    });
+    $("#d20").click(function(){
+        calc(20);
+    });
+    
+});
+
+function calc(dieType) {
+    if (dieAmount == 0) {
+        var resultTemp = Math.floor(Math.random() * dieType) + 1;
+        var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
+        $("#results").text(resultFinal);
+    } else {
+        results = [];
+        for(i = 0; i < dieAmount; i++) {
+            var resultTemp = Math.floor(Math.random() * dieType) + 1;
+            var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
+            results.push(resultFinal);
+        }
+        $("#results").text(results);
+    }
+}
+
+</script>
 </body>
 </html>
