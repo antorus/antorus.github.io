@@ -34,25 +34,32 @@
         #diceBox {
             background-color:rgb(231, 204, 169);
             margin: 20px auto;
-            position: relative;
-            width: 60%;
+            position: absolute;
+            left: 20px;
+            width: 550px;
             border-radius: 3px;
-            
         }
 
         #buttons {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            margin-left: 5%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 5%;
+        }
+
+        #results-box {
+            width: 50%; 
+            padding-left: 5%; 
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        #result {
+            font-size: 20px;
         }
 
         #buttons button {
             width: 50px;
             height: 50px;
-        }
-
-        #results {
-            margin-left: 5%;
         }
 
         .form-group{
@@ -61,14 +68,14 @@
     </style>
 </head>
 <body>
-<div id="diceBox" class="container">
+<div id="diceBox">
 
     <h1>Diceroller</h1>
     <h2>(for the high rollas)</h2>
     <p id="expl">Use this for your D&D or board gaming needs. 
         Enter amount of die and any modifications as needed (like "3" if +3) and then click the die type you'd like to roll.</p>
-    <div class="row">
-        <div class="col-xs-6" id="buttons">
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+        <div id="buttons">
             <button id="d4" class="btn btn-outline-light">d4</button>
             <button id="d6" class="btn btn-outline-light">d6</button>
             <button id="d8" class="btn btn-outline-light">d8</button>
@@ -77,10 +84,11 @@
             <button id="d20" class="btn btn-outline-light">d20</button>
 
         </div>
-        <div >
-            <p id="results">This is where your results will appear!</p>
+        <div id="results-box">
+            <p id="result">This is where your results will appear!</p>
         </div>
     </div>
+
     <div class="row">
         <form  id="amountForm" class="form-inline col-sm">
             <div class="form-group col-sm">
@@ -154,7 +162,7 @@ function calc(dieType) {
     if (dieAmount == 0) {
         var resultTemp = Math.floor(Math.random() * dieType) + 1;
         var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
-        $("#results").text(resultFinal);
+        $("#result").text(resultFinal);
     } else {
         results = [];
         for(i = 0; i < dieAmount; i++) {
@@ -162,7 +170,7 @@ function calc(dieType) {
             var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
             results.push(resultFinal);
         }
-        $("#results").text(results);
+        $("#result").text(results);
     }
 }
 
