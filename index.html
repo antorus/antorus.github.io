@@ -17,18 +17,19 @@
             font-family: "Monoton", cursive;
             text-align: left;
             margin-right: 5%;
+            margin-left: 2%;
         }
         h2 {
             font-family:"Oleo Script Swash Caps", cursive;
             font-size: large;
             text-align: left;
             margin-right: 5%;
+            margin-left: 2%;
         }
-        
+
         #expl {
-            text-align: left;
+            padding-top: 10px;
             margin-left: 5%;
-            margin-right: 5%;
         }
 
         #diceBox {
@@ -41,30 +42,42 @@
         }
 
         #buttons {
+            display: flex;
+            justify-content: center;
             padding-top: 10px;
             padding-bottom: 10px;
             padding-left: 5%;
+            padding-right: 5%;
         }
 
         #results-box {
-            width: 50%; 
             padding-left: 5%; 
+            padding-right: 5%;
             padding-top: 10px;
             padding-bottom: 10px;
         }
 
         #result {
             font-size: 20px;
+            padding-right: 5%;
         }
 
         #buttons button {
-            width: 50px;
-            height: 50px;
+            flex-grow: 1;
         }
 
-        .form-group{
-            margin-left: 3%;
+        #form-box {
+            display: flex;
+            flex-direction: column;
         }
+
+        #form-box div button {
+            width: 50px;
+            height: 30px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -74,7 +87,7 @@
     <h2>(for the high rollas)</h2>
     <p id="expl">Use this for your D&D or board gaming needs. 
         Enter amount of die and any modifications as needed (like "3" if +3) and then click the die type you'd like to roll.</p>
-    <div style="display: flex; flex-direction: row; flex-wrap: wrap;">
+    <div>
         <div id="buttons">
             <button id="d4" class="btn btn-outline-light">d4</button>
             <button id="d6" class="btn btn-outline-light">d6</button>
@@ -89,20 +102,21 @@
         </div>
     </div>
 
-    <div class="row">
-        <form  id="amountForm" class="form-inline col-sm">
-            <div class="form-group col-sm">
-                <input type="text" id="amountInput" class="form-control" placeholder="How many die?">
-                <input type="submit">
-            </div>
-        </form>
-        <form  id="modForm" class="form-inline col-sm">
-            <div class="form-group col-sm">
-                <input type="text" id="modInput" class="form-control" placeholder="Any modifiers?">
-                <input type="submit">
-            </div>
-        </form>
-
+    <div id="form-box">
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+            <button id="minusAmount" class="btn btn-outline-dark">-</button>
+            <form class="myForm" id="amountForm">
+                <input type="text" id="amountInput" maxlength="2" placeholder="How many die?">
+            </form>
+            <button id="plusAmount" class="btn btn-outline-dark">+</button>
+        </div>
+        <div style="display: flex; flex-direction: row; justify-content: center;">
+            <button id="minusMod" class="btn btn-outline-dark">-</button>
+            <form class="myForm" id="modForm">
+                    <input type="text" id="modInput" maxlength="2" placeholder="Any modifiers?">
+            </form>
+            <button id="plusMod" class="btn btn-outline-dark">+</button>
+        </div>
     </div>
 
 </div>
@@ -124,10 +138,8 @@ var results = [];
 var dieType = 0;
 
 $(document).ready(function() { 
-
     $("#amountForm").submit(function(event) {
         dieAmount = $("#amountInput").val();
-        console.log(dieAmount);
         event.preventDefault();
     });
 
@@ -155,22 +167,57 @@ $(document).ready(function() {
     $("#d20").click(function(){
         calc(20);
     });
-    
+
+    $("#plusAmount").click(function(){
+        dieAmount = parseInt(dieAmount) + 1;
+        $("#amountInput").val(dieAmount);
+    });
+
+    $("#minusAmount").click(function(){
+        if(dieAmount > 0) {
+            dieAmount = parseInt(dieAmount) - 1;
+        }
+        $("#amountInput").val(dieAmount);
+    });
+
+    $("#plusMod").click(function(){
+        dieMod = parseInt(dieMod) + 1;
+        $("#modInput").val(dieMod);
+    });
+
+    $("#minusMod").click(function(){
+        dieMod = parseInt(dieMod) - 1;
+        $("#modInput").val(dieMod);
+    });
+
+    $("#amountInput").change(function() {
+        dieAmount = $(this).val();
+    });
+
+    $("#modInput").change(function() {
+        dieMod = $(this).val();
+    });
 });
 
 function calc(dieType) {
     if (dieAmount == 0) {
+        $("#result").animate({opacity: 0}, 300, function() {
         var resultTemp = Math.floor(Math.random() * dieType) + 1;
         var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
         $("#result").text(resultFinal);
+        $("#result").animate({opacity: 1}, 300);
+        });
     } else {
-        results = [];
-        for(i = 0; i < dieAmount; i++) {
-            var resultTemp = Math.floor(Math.random() * dieType) + 1;
-            var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
-            results.push(resultFinal);
-        }
-        $("#result").text(results);
+        $("#result").animate({opacity: 0}, 300, function() {
+            results = [];
+            for(i = 0; i < dieAmount; i++) {
+                var resultTemp = Math.floor(Math.random() * dieType) + 1;
+                var resultFinal = parseInt(resultTemp) + parseInt(dieMod);
+                results.push(resultFinal);
+            }
+            $("#result").text(results.join(", "));
+            $("#result").animate({opacity: 1}, 300);
+        });
     }
 }
 
